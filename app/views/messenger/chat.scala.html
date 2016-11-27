@@ -1,0 +1,17 @@
+@(title: String)
+
+@import views.html.messenger.head
+@import views.html.messenger.elements.messagelist
+@import views.html.messenger.elements.input
+@import views.html.messenger.elements.navbar
+
+@head(title) {
+    @navbar(title)
+    <div class="container" role="main">
+        <div class="well">
+            @input()
+            <hr>
+            @messagelist()
+        </div>
+    </div>
+}
