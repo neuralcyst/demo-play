@@ -20,7 +20,6 @@ import java.util.Set;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CompletionStage;
 import java.util.concurrent.ExecutionException;
-import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
 @Singleton
@@ -30,9 +29,6 @@ public class LastFmController extends Controller {
 
     private final WSClient wsClient;
     private final ContextProvider contextProvider;
-
-    private static final Supplier<String> API_KEY = () -> "169bb22719c920b255ccca73b0d83125";
-
 
     @Inject
     public LastFmController(WSClient wsClient, ContextProvider contextProvider) {
@@ -123,7 +119,7 @@ public class LastFmController extends Controller {
 
     private WSRequest createGetSimilarArtistRequest(String artist) {
         return wsClient.url(LAST_FM_URL)
-                .setQueryParameter("api_key", API_KEY.get())
+                .setQueryParameter("api_key", "169bb22719c920b255ccca73b0d83125")
                 .setQueryParameter("method", "artist.getSimilar")
                 .setQueryParameter("artist", artist)
                 .setQueryParameter("format", "json")

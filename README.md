@@ -5,7 +5,7 @@ Asynchronous request processing and how to do then your are async but have to ma
 
 ### How to start
 
-In order to start application you need to have Activator installed.
+In order to start application you need to have Java 8 and Activator installed.
 More info here: [Installing Play](https://www.playframework.com/documentation/2.5.x/Installing)
 
 ### What can I find here?
