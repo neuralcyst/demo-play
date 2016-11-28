@@ -31,9 +31,7 @@ public class LastFmController extends Controller {
     private final WSClient wsClient;
     private final ContextProvider contextProvider;
 
-    private static final Supplier<String> API_KEY = () -> {
-        throw new IllegalArgumentException("Get your own api key: http://www.last.fm/api/desktopauth and return it by this supplier");
-    };
+    private static final Supplier<String> API_KEY = () -> "169bb22719c920b255ccca73b0d83125";
 
 
     @Inject
