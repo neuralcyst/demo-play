@@ -1,49 +1,23 @@
-This is your new Play application
-=================================
+## PLAY FRAMEWORK - APPLICATION EXAMPLE
 
-This file will be packaged with your application when using `activator dist`.
+Small application with a few examples of Play Framework features.
+Asynchronous request processing and how to do then your are async but have to make some blocking-method invocation are in focus.
 
-There are several demonstration files available in this template.
+### How to start
 
-Controllers
-===========
+In order to start application you need to have Activator installed.
+More info here: [Installing Play](https://www.playframework.com/documentation/2.5.x/Installing)
 
-- HomeController.java:
+### What can I find here?
 
-  Shows how to handle simple HTTP requests.
+Routes file is a heart of Play Framework (demo-play/conf/routes), you should start from here.
+There you can find 3 main example of how to use Play
+ - /simple/* demo-play/app/controllers/SimpleController - set of simple request processing examples
+ - /lastfm/* demo-play/app/controllers/LastFmController - examples of async Play WebService Library usage.
+ - /messenger demo-play/app/controllers/MessengerController - simple chat example with Actors usage and blocking db-operations
 
-- AsyncController.java:
-
-  Shows how to do asynchronous programming when handling a request.
-
-- CountController.java:
-
-  Shows how to inject a component into a controller and use the component when
-  handling requests.
-
-Components
-==========
-
-- Module.java:
-
-  Shows how to use Guice to bind all the components needed by your application.
-
-- Counter.java:
-
-  An example of a component that contains state, in this case a simple counter.
-
-- ApplicationTimer.java:
-
-  An example of a component that starts when the application starts and stops
-  when the application stops.
-
-Filters
-=======
-
-- Filters.java:
-
-  Creates the list of HTTP filters used by your application.
-
-- ExampleFilter.java
-
-  A simple filter that adds a header to every response.
+### You can also check
+ - demo-play/app/filters/CustomGzipFilters - filter which zip all your html responses
+ - demo-play/app/views/messenger - Twirl template engine example (part of messenger example)
+ - demo-play/app/models/MessageEntity - EBean ORM usage example (part of messenger example)
+ - demo-play/app/Module - place where Guice Dependency Injection  beans are configured

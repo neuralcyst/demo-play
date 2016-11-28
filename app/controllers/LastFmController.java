@@ -20,6 +20,7 @@ import java.util.Set;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CompletionStage;
 import java.util.concurrent.ExecutionException;
+import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
 @Singleton
@@ -29,6 +30,10 @@ public class LastFmController extends Controller {
 
     private final WSClient wsClient;
     private final ContextProvider contextProvider;
+
+    private static final Supplier<String> API_KEY = () -> {
+        throw new IllegalArgumentException("Get your own api key: http://www.last.fm/api/desktopauth and return it by this supplier");
+    };
 
 
     @Inject
@@ -50,6 +55,10 @@ public class LastFmController extends Controller {
                 });
     }
 
+    /***
+     * See also {@link LastFmController#biSimilarArtistsBlocking(String)} - example of how to do the same
+     * thing with Blocking WS-calls in async environment}
+     */
     public CompletionStage<Result> biSimilarArtists(String artist) {
         WSRequest request = createGetSimilarArtistRequest(artist);
 
@@ -67,7 +76,7 @@ public class LastFmController extends Controller {
             CompletableFuture<Void> allOfFuture = CompletableFuture.allOf(toFutureArray(artistFutures));
 
             return allOfFuture.thenApply(v -> artistFutures.stream()
-                    .map(responseFuture -> responseFuture.join())
+                    .map(CompletableFuture::join)
                     .map(WSResponse::asJson)
                     .flatMap(similarNode -> fromJsonToArtists(similarNode).stream()
                             .map(a -> a.name))
@@ -77,6 +86,9 @@ public class LastFmController extends Controller {
         return biSimilarArtists.thenApply(artists -> ok(artists.toString()));
     }
 
+    /***
+     * See also {@link LastFmController#biSimilarArtists(String)} - example of pure async request processing
+     */
     public CompletionStage<Result> biSimilarArtistsBlocking(String artist) {
         return CompletableFuture.supplyAsync(() -> {
                     Set<String> result = new HashSet<>();
@@ -113,7 +125,7 @@ public class LastFmController extends Controller {
 
     private WSRequest createGetSimilarArtistRequest(String artist) {
         return wsClient.url(LAST_FM_URL)
-                .setQueryParameter("api_key", "169bb22719c920b255ccca73b0d83125")
+                .setQueryParameter("api_key", API_KEY.get())
                 .setQueryParameter("method", "artist.getSimilar")
                 .setQueryParameter("artist", artist)
                 .setQueryParameter("format", "json")
